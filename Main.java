@@ -1,103 +1,94 @@
-/******************************************************************************
-
-Welcome to GDB Online.
-GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
-C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
-Code, Compile, Run and Debug online from anywhere in world.
-
-*******************************************************************************/
 /*
  * ==========================================================
- * PROYECTO: Sistema de Gestión de Estudiantes
- * Autor: Tu nombre
+ * PROYECTO: Sistema de Gestión de Estudiantes con Herencia
+ * Autor: Iris Sarahi Gutiérrez Gamboa
  *
- * Este programa demuestra el uso de:
+ * Esta aplicación demuestra el uso de:
  * - Clases
  * - Objetos
- * - Atributos
+ * - Herencia
  * - Constructores
- * - Métodos
+ * - Sobrescritura de métodos (@Override)
+ * - Reutilización de código
  * ==========================================================
  */
 
-/*
- * La clase Estudiante representa a un estudiante.
- * No lleva la palabra "public" porque todo el código
- * está en un solo archivo llamado Main.java.
- * Prueba 1
- */
-class Estudiante {
+//============================================================
+// CLASE PADRE (SUPERCLASE)
+//============================================================
 
-    // ============================
-    // ATRIBUTOS
-    // ============================
+// La clase Persona almacena la información común de cualquier persona.
+class Persona {
 
-    // Guarda el nombre del estudiante.
-    private String nombre;
+    // Atributo protegido para que pueda ser utilizado por las clases hijas.
+    protected String nombre;
 
-    // Guarda la edad del estudiante.
-    private int edad;
+    // Atributo protegido para almacenar la edad.
+    protected int edad;
 
-    // Guarda la matrícula del estudiante.
-    private String matricula;
+    // Constructor de la clase Persona.
+    public Persona(String nombre, int edad) {
 
-    // Guarda el promedio del estudiante.
-    private double promedio;
-
-    // ============================
-    // CONSTRUCTOR
-    // ============================
-
-    /*
-     * El constructor se ejecuta automáticamente
-     * cuando se crea un nuevo objeto.
-     *
-     * Recibe los datos del estudiante y los guarda
-     * en los atributos de la clase.
-     */
-    public Estudiante(String nombre, int edad, String matricula, double promedio) {
-
-        // "this" hace referencia al atributo de la clase.
-
+        // Inicializa el atributo nombre.
         this.nombre = nombre;
-        this.edad = edad;
-        this.matricula = matricula;
-        this.promedio = promedio;
 
+        // Inicializa el atributo edad.
+        this.edad = edad;
     }
 
-    // ============================
-    // MÉTODO mostrarInformacion()
-    // ============================
-
-    /*
-     * Este método imprime toda la información
-     * del estudiante.
-     */
+    // Método que muestra la información básica de la persona.
     public void mostrarInformacion() {
 
         System.out.println("Nombre: " + nombre);
-
         System.out.println("Edad: " + edad);
+    }
+}
 
-        System.out.println("Matrícula: " + matricula);
+//============================================================
+// CLASE HIJA
+//============================================================
 
-        System.out.println("Promedio: " + promedio);
+// La clase Estudiante hereda todos los atributos y métodos de Persona.
+class Estudiante extends Persona {
 
+    // Matrícula del estudiante.
+    protected String matricula;
+
+    // Promedio del estudiante.
+    protected double promedio;
+
+    // Constructor de la clase Estudiante.
+    public Estudiante(String nombre,
+                      int edad,
+                      String matricula,
+                      double promedio) {
+
+        // Llama al constructor de la clase Persona.
+        super(nombre, edad);
+
+        // Inicializa la matrícula.
+        this.matricula = matricula;
+
+        // Inicializa el promedio.
+        this.promedio = promedio;
     }
 
-    // ============================
-    // MÉTODO verificarAprobacion()
-    // ============================
+    // Sobrescribe el método mostrarInformacion().
+    @Override
+    public void mostrarInformacion() {
 
-    /*
-     * Comprueba si el estudiante aprobó.
-     * Si el promedio es mayor o igual a 70,
-     * el estudiante aprueba.
-     */
+        // Muestra la información heredada.
+        super.mostrarInformacion();
+
+        // Muestra la matrícula.
+        System.out.println("Matrícula: " + matricula);
+
+        // Muestra el promedio.
+        System.out.println("Promedio: " + promedio);
+    }
+
+    // Verifica si el estudiante aprobó.
     public void verificarAprobacion() {
-
-        // Se evalúa la condición.
 
         if (promedio >= 70) {
 
@@ -113,94 +104,194 @@ class Estudiante {
 
 }
 
-/*
- * Clase principal del programa.
- *
- * La ejecución siempre inicia aquí.
- */
-public class Main {
+//============================================================
+// SUBCLASE ESTUDIANTE DE LICENCIATURA
+//============================================================
 
-    /*
-     * Método principal.
-     *
-     * Java ejecuta este método automáticamente
-     * cuando inicia el programa.
-     */
-    public static void main(String[] args) {
+// Hereda de Estudiante.
+class EstudianteLicenciatura extends Estudiante {
 
-        // ===================================
-        // CREACIÓN DEL PRIMER OBJETO
-        // ===================================
+    // Carrera del estudiante.
+    private String carrera;
 
-        /*
-         * Se crea un objeto llamado estudiante1.
-         *
-         * "new" crea un nuevo objeto utilizando
-         * el constructor de la clase Estudiante.
-         */
+    // Constructor.
+    public EstudianteLicenciatura(String nombre,
+                                  int edad,
+                                  String matricula,
+                                  double promedio,
+                                  String carrera) {
 
-        Estudiante estudiante1 = new Estudiante(
+        // Llama al constructor de Estudiante.
+        super(nombre, edad, matricula, promedio);
 
-                // Nombre
-                "Juan Pérez",
+        // Inicializa la carrera.
+        this.carrera = carrera;
 
-                // Edad
-                20,
+    }
 
-                // Matrícula
-                "A001",
+    // Sobrescribe el método heredado.
+    @Override
+    public void mostrarInformacion() {
 
-                // Promedio
-                90.5
+        System.out.println("=================================");
+        System.out.println("ESTUDIANTE DE LICENCIATURA");
+        System.out.println("=================================");
 
-        );
+        // Muestra la información heredada.
+        super.mostrarInformacion();
 
-        // ===================================
-        // CREACIÓN DEL SEGUNDO OBJETO
-        // ===================================
+        // Muestra la carrera.
+        System.out.println("Carrera: " + carrera);
 
-        Estudiante estudiante2 = new Estudiante(
+    }
 
-                "María López",
-                21,
-                "A002",
-                65.0
+    // Método exclusivo.
+    public void realizarServicioSocial() {
 
-        );
-
-        // ===================================
-        // MOSTRAR DATOS DEL PRIMER ESTUDIANTE
-        // ===================================
-
-        System.out.println("===================================");
-
-        System.out.println("ESTUDIANTE 1");
-
-        System.out.println("===================================");
-
-        // Llama al método que imprime la información.
-        estudiante1.mostrarInformacion();
-
-        // Llama al método que verifica si aprobó.
-        estudiante1.verificarAprobacion();
-
-        // Imprime una línea en blanco.
-        System.out.println();
-
-        // ===================================
-        // MOSTRAR DATOS DEL SEGUNDO ESTUDIANTE
-        // ===================================
-
-        System.out.println("===================================");
-
-        System.out.println("ESTUDIANTE 2");
-
-        System.out.println("===================================");
-
-        estudiante2.mostrarInformacion();
-
-        estudiante2.verificarAprobacion();
+        System.out.println("Servicio social: EN PROCESO");
 
     }
 
 }
+
+//============================================================
+// SUBCLASE ESTUDIANTE DE POSGRADO
+//============================================================
+
+// Hereda de Estudiante.
+class EstudiantePosgrado extends Estudiante {
+
+    // Línea de investigación.
+    private String lineaInvestigacion;
+
+    // Constructor.
+    public EstudiantePosgrado(String nombre,
+                              int edad,
+                              String matricula,
+                              double promedio,
+                              String lineaInvestigacion) {
+
+        // Llama al constructor del padre.
+        super(nombre, edad, matricula, promedio);
+
+        // Inicializa la línea de investigación.
+        this.lineaInvestigacion = lineaInvestigacion;
+
+    }
+
+    // Sobrescribe mostrarInformacion().
+    @Override
+    public void mostrarInformacion() {
+
+        System.out.println("=================================");
+        System.out.println("ESTUDIANTE DE POSGRADO");
+        System.out.println("=================================");
+
+        // Llama al método heredado.
+        super.mostrarInformacion();
+
+        // Muestra la línea de investigación.
+        System.out.println("Línea de investigación: " + lineaInvestigacion);
+
+    }
+
+    // Método propio.
+    public void publicarArticulo() {
+
+        System.out.println("Artículo científico publicado.");
+
+    }
+
+}
+
+//============================================================
+// CLASE PRINCIPAL
+//============================================================
+
+// Únicamente Main debe ser pública.
+public class Main {
+
+    // Punto de entrada del programa.
+    public static void main(String[] args) {
+
+        // Crea un objeto de tipo EstudianteLicenciatura.
+        EstudianteLicenciatura estudiante1 =
+                new EstudianteLicenciatura(
+                        "Juan Pérez",
+                        20,
+                        "A001",
+                        90.5,
+                        "Ingeniería en Software");
+
+        // Crea un objeto de tipo EstudiantePosgrado.
+        EstudiantePosgrado estudiante2 =
+                new EstudiantePosgrado(
+                        "María López",
+                        25,
+                        "P002",
+                        95.0,
+                        "Inteligencia Artificial");
+
+        // Muestra la información del primer estudiante.
+        estudiante1.mostrarInformacion();
+
+        // Verifica si aprobó.
+        estudiante1.verificarAprobacion();
+
+        // Ejecuta el método exclusivo.
+        estudiante1.realizarServicioSocial();
+
+        // Línea en blanco.
+        System.out.println();
+
+        // Muestra la información del segundo estudiante.
+        estudiante2.mostrarInformacion();
+
+        // Verifica si aprobó.
+        estudiante2.verificarAprobacion();
+
+        // Ejecuta el método exclusivo.
+        estudiante2.publicarArticulo();
+
+    }
+
+}
+
+/*
+ * ==========================================================
+ * CONTROL DE VERSIONES CON GIT Y GITHUB
+ * ==========================================================
+ *
+ * Para cumplir con los requisitos de la actividad se utilizó
+ * Git como sistema de control de versiones y GitHub como
+ * repositorio remoto.
+ *
+ * Pasos realizados:
+ *
+ * 1. Crear el repositorio local.
+ *      git init
+ *
+ * 2. Agregar todos los archivos del proyecto.
+ *      git add .
+ *
+ * 3. Realizar el primer commit.
+ *      git commit -m "Proyecto base Sistema de Gestión de Estudiantes"
+ *
+ * 4. Crear una nueva rama para implementar la herencia.
+ *      git checkout -b actividad3-herencia
+ *
+ * 5. Agregar las modificaciones.
+ *      git add .
+ *
+ * 6. Guardar los cambios.
+ *      git commit -m "Implementación de herencia en el sistema"
+ *
+ * 7. Subir la nueva rama a GitHub.
+ *      git push -u origin actividad3-herencia
+ *
+ * Con este procedimiento se mantiene un historial organizado
+ * de cambios y se conserva la rama principal sin modificar.
+ *
+ * ==========================================================
+ */
+
